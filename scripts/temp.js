@@ -30,7 +30,7 @@ const tmp = {
     },
     get replicatePerTick() {
       let mult = E(1).add(E(0.25).mul(player.points.add(1).log10().div(80).max(1))).pow(1 / 30).pow(player.timeSpeed)
-      let debuff = player.sqrt.points.div(1e100).log10().mul(0.05).add(1).max(1)
+      let debuff = player.sqrt.points.div(1e100).log10().mul(0.005).add(1).max(1)
       if (hasSqUpg(9)) debuff = E(1)
       debuff = debuff.add(E(10).pow(player.sqrt.points.div("1e400").log10().mul(0.0075).max(0).root(tmp.sqrt.SoftRoot)))
       let buff = E(1)
@@ -89,11 +89,11 @@ const tmp = {
     return a.min(1)
   },
   pointsToDims(dim) {
-    let costPow = E(1)
-    if(player.square.chals.includes(1)) costPow = costPow.mul(0.8)
-    var x = player.points.root(costPow).overflow(tmp.dimsSoftStart1, tmp.dimsSoftPower1)
+    let costRoot = E(1)
+    if(player.square.chals.includes(1)) costRoot = costRoot.mul(1.25)
+    if (player.cube.fractals.gte(27)) costRoot = costRoot.mul(tmp.cube.fracEff1)
+    var x = player.points.pow(costRoot).overflow(tmp.dimsSoftStart1, tmp.dimsSoftPower1)
     let final = x.log10().div(dim)
-    if(player.isSetCappedDim) final = final.min(player.dims[dim][4].add(player.limitBuyDimNumber.div(10)))
     let a = Math.min(player.sqrt.galaxies.toNumber(), 6)
     if(player.chal == 5 && (a < dim)) final = final.min(tmp.square.chal1cap).max(0.1)
     if(player.chal == 1 && dim == 8) final = final.min(tmp.square.chal1cap).max(0.1)
@@ -190,14 +190,23 @@ const tmp = {
       return player.square.points.add(1).log10().root(3).div(3).sub(3).floor().clampMin(0)
     },
     get gainDis() {
-      let sqrtgain = player.sqrt.points.slog().cbrt()
+      let sqrtgain = player.sqrt.points.slog().sqrt()
       let ptsgain = player.points.slog()
       let sqgain = player.square.points.slog().pow(2)
-      return sqrtgain.add(ptsgain).add(sqgain).floor().clampMin(0)
+      return sqrtgain.add(ptsgain).add(sqgain).floor().sub(8).clampMin(0)
     },
     get gainUpg() {
       return E(2).pow(player.square.upgrades.length - 15).floor()
     },
+    get babCost1() {
+      return E(3).pow(player.cube.buyables[0])
+    },
+    get babEff1() {
+      return player.cube.buyables[0]
+    },
+    get fracEff1() {
+      return player.cube.fractals.add(9).log10().clampMin(0)
+    }
   },
   get achievementsEffDim() {
     return E(1.05).pow(player.achievements.length)

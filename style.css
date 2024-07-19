@@ -225,6 +225,18 @@ button {
   display: inline-block;
 }
 
+.cube:disabled {
+  cursor: pointer;
+  font-size: 12px;
+  max-width: 250px;
+  padding: 7px 25px;
+  text-decoration: none;
+  border: 1px solid rgb(0, 80, 80);
+  background: rgb(0, 55, 55);
+  color: white;
+  display: inline-block;
+}
+
 .btn:disabled {
   border-color: #222;
   background: #171717;
@@ -582,6 +594,16 @@ spoiler {
   align-items: center;
   text-align: center;
 }
+.upg_upg_canbuy {
+  width: 40px;
+  height: 40px;
+  background: black;
+  border: solid 2px #700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 
 .sq_upg_bought {
   background: #550;
@@ -815,3 +837,30 @@ spoiler {
   background-color: darkgreen;
 }
 
+.upg_upg {
+  width: 184px;
+  height: 120px;
+  background-color: #000;
+  color: #fff;
+  border: 4px solid rgb(0, 159, 159);
+  border-radius: 8px;
+  font-family: 'Courier New', 'Source Han Sans', sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.upg_upg_bought {
+  width: 184px;
+  height: 120px;
+  background-color: #00ff80;
+  color: #000;
+  border: 4px solid rgb(0, 159, 159);
+  border-radius: 8px;
+  font-family: 'Courier New', 'Source Han Sans', sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block;
+}

@@ -16,6 +16,7 @@
     updateResetTime(); 
     updatePMP()
     updateAch()
+    updateCube()
   }  
   
   document.addEventListener('DOMContentLoaded', function() {  
@@ -111,9 +112,10 @@ function changeAuto(dim) {
 function autoBuy() {
   if (player.chal != 5) {
   for(let i = 1; i <= 8; i++) {
+    if (!player.canautodim) break
     if(player.autodims[i - 1]) buyMaxDim(i)
   }
-  if (player.autogalaxy) galaxy()
+  if (player.autogalaxy && hasSqUpg(7)) galaxy()
   }
 }
 

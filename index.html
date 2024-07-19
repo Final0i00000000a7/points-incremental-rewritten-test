@@ -18,7 +18,8 @@
   <script src="scripts/script.js" defer></script>
   <script src="scripts/sqrt.js" defer></script>
   <script src="scripts/square.js" defer></script>
-  <script src="scripts/cube.js" defer></script>
+  <script src="scripts/cube/index.js" defer></script>
+  <script src="scripts/cube/buyables.js" defer></script>
   <script src="scripts/pmp.js" defer></script>
   <script src="scripts/others.js" defer></script>
   <script src="scripts/offline.js" defer></script>
@@ -42,18 +43,18 @@
     <div>
       <newsticker v-if="player.options.showNewsTicker"></newsticker>
       <div class="popup" v-if="app.isShowingPopup == 1">请输入存档<br><input v-model="save" placeholder="在此处键入存档"><br><button @click="importFromApp" class="btn">导入</button></div>
-      <div class="popup" v-if="app.isShowingPopup == 2">输入想要更改的上限<br><input v-model="limitBuy" placeholder="在此处键入单次购买上限"><br>是否开启上限：<input id="isSetCappedDim" type="checkbox" v-model="player.isSetCappedDim"><br><button @click="openPopup(0)" class="btn">关闭</button></div>
       <div v-html="getPointDisplay()"></div>
       <div v-if="isEndgame" :style="{color: getUndulatingColor()}">已到达当前版本终点！</div>
       <div>{{ getPointGain() }}</div>
       <div v-if="player.timeSpeed != 1">当前全局游戏速度：×{{ format(player.timeSpeed) }}</div>
       <div style="color: yellow" v-if="player.square.unl">你有{{ player.square.points.format(0) }}点数<sup>2</sup>，因此√点数复制速度×{{ tmp.square.effect.format() }}</div>
-      <div style="color: rgb(0, 127, 127)" v-if="player.cube.unl">你有{{ player.cube.points.format(0) }}点数<sup>3</sup></div>
+      <div style="color: rgb(0, 155, 155)" v-if="player.cube.unl">你有{{ player.cube.points.format(0) }}点数<sup>3</sup>, {{ player.cube.dis.format(0) }}可拆点数<sup>3</sup>和{{ player.cube.upg.format(0) }}升级点数</div>
       <main-line></main-line>
       <div>
         <button @click="switchpage(1)" class="btn" :disabled="tabshow.main.inTab">主要</button>
         <button @click="switchpage(5)" class="btn" :disabled="tabshow.resets.inTab" v-if="tabshow.resets.unlocked">重置</button>
         <button @click="switchpage(7)" class="square" :disabled="tabshow.square.inTab" v-if="tabshow.square.unlocked">平方</button>
+        <button @click="switchpage(12)" class="cube" :disabled="tabshow.cube.inTab" v-if="tabshow.cube.unlocked">立方</button>
         <button @click="switchpage(6)" class="btn" :disabled="tabshow.stats.inTab">统计</button>
         <button @click="switchpage(2)" class="btn" :disabled="tabshow.others.inTab">杂项</button>
       </div>
@@ -69,11 +70,13 @@
         <button @click="switchpage(9)" class="square" v-if="tabshow.square.pmp.unlocked" :disabled="tabshow.square.pmp.inTab">点数×点数</button>
         <button @click="switchpage(6)" class="btn" :disabled="tabshow.stats.stats.inTab" v-if="tabshow.stats.stats.unlocked">统计</button>
         <button @click="switchpage(10)" class="btn" v-if="tabshow.stats.achievement.unlocked" :disabled="tabshow.stats.achievement.inTab">成就</button>
+        <button @click="switchpage(12)" class="cube" v-if="tabshow.cube.buyables.unlocked" :disabled="tabshow.cube.buyables.inTab">购买项</button>
+        <button @click="switchpage(13)" class="cube" v-if="tabshow.cube.disassemble.unlocked" :disabled="tabshow.cube.disassemble.inTab">拆分</button>
+        <button @click="switchpage(14)" class="cube" v-if="tabshow.cube.upgrades.unlocked" :disabled="tabshow.cube.upgrades.inTab">升级</button>
         <main-line></main-line>
       </div>
       <div v-if="player.currentPage == 1">
         <button @click="buyall" class="btn" @touchstart="isHoldMax = true" @touchend="isHoldMax = false">购买最大</button>
-        <button @click="openPopup(2)" class="btn" v-if="player.square.chals.includes(2)">更改每次购买上限</button>
         <template>
           <div v-for="dim in dimensions" :key="dim.id">
             <span v-if="tmp.hasSuperScalDim(dim.id)" style="color:red">超级折算</span><span>{{ dim.label }}</span>
@@ -119,7 +122,7 @@
       </div>
       <div v-if="player.currentPage == 5">
         <button class="square" @click="square">重置之前的所有内容，但获取{{ tmp.square.gain.format(0) }}点数<sup>2</sup><br>要求：1.000e785点数</button>
-        <button class="cube" @click="cube" v-if="hasSqUpg(15)">重置之前的所有内容，但获取{{ tmp.cube.gainNorm.format(0) }}点数<sup>3</sup>, {{ tmp.cube.gainDis.format(0) }}可拆点数<sup>3</sup>和{{ tmp.cube.gainUpg.format(0) }}升级点数<br>要求：1.00e1,729点数<sup>2</sup></button>
+        <button class="cube" @click="cube" v-if="hasSqUpg(15) || player.cube.unl">重置之前的所有内容，但获取{{ tmp.cube.gainNorm.format(0) }}点数<sup>3</sup>, {{ tmp.cube.gainDis.format(0) }}可拆点数<sup>3</sup>和{{ tmp.cube.gainUpg.format(0) }}升级点数<br>要求：1.00e1,729点数<sup>2</sup></button>
       </div>
       <div v-if="player.currentPage == 6">
         你总共制造了{{ formatWhole(player.total) }}点数<br>
@@ -193,6 +196,35 @@
         <input type="range" min="0" max="7" step="0.001" style="width: 300px" v-model.number="player.offlinePower"><br>
         当时间超频激活时，游戏速度将被加快至原来的{{ format(2**player.offlinePower) }}倍，但代价是离线时间每秒减少{{ format(2**player.offlinePower-1) }}秒<br>
         <button class="btn" @click="switchTimeOverpower">{{ player.timeOverpower? "关闭" : "激活" }}时间超频</button>
+      </div>
+      <div v-if="player.currentPage == 12">
+        你有{{ player.cube.fractals.format(0) }}维度分形<br>
+        <div v-html="getDimFracEffDis()"></div>
+        <br><br>
+        <button class="cube" @click="buyCubeBab(0)">
+          维度分形机({{ player.cube.buyables[0].format(0) }})<br>
+          每秒生产{{ tmp.cube.babEff1.format() }}维度分形<br>
+          价格：{{ tmp.cube.babCost1 }}点数<sup>3</sup>
+        </button>
+      </div>
+      <div v-if="player.currentPage == 13">
+        里程碑
+        <main-line></main-line>
+        拆分点数<sup>3</sup>
+        <main-line></main-line>
+        选择公式<br>
+        立方和公式：增益 减益<br>
+        立方差公式：增益 减益<br>
+        ----达到8可拆点数<sup>3</sup>后----<br>
+        削弱立方和公式减益，加强增益<br>
+        削弱立方差公式减益，加强增益<br>
+        <main-line></main-line>
+        让其中一个公式的减益无效，另外一个变为50%
+      </div>
+      <div v-if="player.currentPage == 14">
+        <table>
+          <button></button>
+        </table>
       </div>
     </div>
   </div>

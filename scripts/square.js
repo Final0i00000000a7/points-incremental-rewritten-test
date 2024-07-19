@@ -146,7 +146,7 @@ const sq_upgs = [{
     desc: "解锁立方重置",
     cost: E("1e1600"),
     get unlocked() {
-      return hasSqUpg(14)
+      return hasSqUpg(14) || player.cube.unl
     },
   },
 ]
@@ -181,7 +181,7 @@ const sq_chal = [{
       return player.square.chals.includes(1)
     },
     goal: E(2).pow(1024).pow(2),
-    reward: "星系的效率+20%<br>√点数对第一维度的乘数增益指数+0.1，第二维度+0.2，以此类推，第八维度+0.8<br>√点数在1.79e308之前的复制速度*lg(第八维度购买的数量+10)<br>允许你对下次购买维度时购买的数量设置上限"
+    reward: "星系的效率+20%<br>√点数对第一维度的乘数增益指数+0.1，第二维度+0.2，以此类推，第八维度+0.8<br>√点数在1.79e308之前的复制速度*lg(第八维度购买的数量+10)"
   },
   {
     id: 3,

@@ -227,30 +227,6 @@ tabshow = {
       get unlocked() {
         return [7,8,9].includes(player.currentPage) && hasSqChal(5)
       },
-      left: {
-        get inTab() {
-          return player.currentPage == 9
-        },
-        get unlocked() {
-          return [9].includes(player.currentPage)
-        }
-      },
-      multply: {
-        get inTab() {
-          return player.currentPage == 10
-        },
-        get unlocked() {
-          return [9].includes(player.currentPage)
-        }
-      },
-      right: {
-        get inTab() {
-          return player.currentPage == 11
-        },
-        get unlocked() {
-          return [9].includes(player.currentPage)
-        }
-      },
     },
   },
   stats: {
@@ -295,8 +271,40 @@ tabshow = {
       },
     },
   },
+  cube: {
+    get inTab() {
+      return [12,13,14].includes(player.currentPage)
+    },
+    get unlocked() {
+      return player.cube.unl
+    },
+    buyables: {
+      get inTab() {
+        return player.currentPage == 12
+      },
+      get unlocked() {
+        return [12,13,14].includes(player.currentPage)
+      },
+    },
+    disassemble: {
+      get inTab() {
+        return player.currentPage == 13
+      },
+      get unlocked() {
+        return [12,13,14].includes(player.currentPage)
+      },
+    },
+    upgrades: {
+      get inTab() {
+        return player.currentPage == 14
+      },
+      get unlocked() {
+        return [12,13,14].includes(player.currentPage)
+      },
+    },
+  },
   get showTheSecondLine() {
-    return [1,2,3,4,6,7,8,9,10,11].includes(player.currentPage)
+    return [1,2,3,4,6,7,8,9,10,11,12,13,14].includes(player.currentPage)
   }
 }
 
@@ -362,4 +370,18 @@ function getAchClass(ach) {
 }
 function getGalButtonText() {
   return `获得一个星系<br>但重置之前的一切<br>${getGalRewardText()}<br>要求：${format(tmp.sqrt.galCost) }√点数`
+}
+
+function getDimFracEffDis() {
+  let str1 = ""
+  let str2 = ""
+  if (player.cube.fractals.lt(27)) str2 += "达到27维度分形以解锁下一效果"
+  else if (player.cube.fractals.lt(7625597484987)) {
+    str1 += `所有维度的价格变为${tmp.cube.fracEff1.format()}次方根`
+    str2 += "达到7,625,597,484,987维度分形以解锁下一效果"
+  }
+  else if (player.cube.fractals.lt("10^^7625597484987")) {
+    str2 += `达到${E(3).pent(3)}维度分形以解锁下一效果`
+  }
+  return str1 + "<br>" + str2
 }

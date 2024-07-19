@@ -105,8 +105,6 @@ function hard_reset() {
         showNewsTicker: true,
         hotkey: true
       },
-      limitBuyDimNumber: E(Infinity),
-      isSetCappedDim: false,
       autogalaxy: false,
       pmp: {
         fromsquare: E(0), //因式分解
@@ -130,7 +128,11 @@ function hard_reset() {
         upg: E(0),
         total: E(0),
         best: E(0),
-      }
+        upgrades: [],
+        milestones: [],
+        fractals: E(0),
+        buyables: [E(0)],
+      },
     }
 }
 
