@@ -122,7 +122,15 @@ function hard_reset() {
       offlinedTime: 0,
       isOffline: false,
       offlinePower: 0,
-      timeOverpower: false
+      timeOverpower: false,
+      cube: {
+        unl: false,
+        points: E(0),
+        dis: E(0),
+        upg: E(0),
+        total: E(0),
+        best: E(0),
+      }
     }
 }
 

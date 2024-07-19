@@ -31,7 +31,7 @@ function buyPMP(x) {
 function updatePMP() {
   player.pmp.transPoint = player.pmp.transPoint.add(tmp.pmp.tPgain.div(30).mul(player.timeSpeed))
   let ct = player.pmp.transPoint.log10().div(6).floor()
-  if (ct.gt(50)) ct = player.pmp.transPoint.logBase(2).logBase(1.024).div(6).floor()
+  if (ct.gt(50)) ct = player.pmp.transPoint.logBase(3).logBase(3).pow(3).div(4).floor()
   if (player.pmp.transCrystal.lt(ct)) player.pmp.transCrystal = ct
 }
 

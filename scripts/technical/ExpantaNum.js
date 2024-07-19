@@ -262,6 +262,12 @@
   Q.lessThanOrEqualTo_tolerance = Q.lte_tolerance = function(x, y, tolerance) {
     return new ExpantaNum(x).lte_tolerance(y, tolerance);
   };
+  P.clampMin = function(x) {
+    return this.max(x)
+  }
+  P.clampMax = function(x) {
+    return this.min(x)
+  }
   //From break_eternity.js
   //https://github.com/Patashu/break_eternity.js/blob/96901974c175cb28f66c7164a5a205cdda783872/src/index.ts#L2802
   P.equalsTo_tolerance = P.equal_tolerance = P.eq_tolerance = function(other, tolerance) {
@@ -879,7 +885,7 @@
     if(x.eq(0)) return E.ONE.neg()
     let current = this.slog().floor().toNumber()
     let step = 1
-    while(step >= Number.EPSILON) {
+    while(step >= 1e-13) {
       if(E.non_linear_10tetr(current).lt(x)) {
         current += step
       } else {
@@ -1290,9 +1296,6 @@
     return ExpantaNum.choose(this, other);
   };
   //end break_eternity.js excerpt
-  P.sinh = function() {
-    return this.exp().sub(this.negate().exp()).div(2);
-  };
   P.normalize = function() {
     var b;
     var x = this;

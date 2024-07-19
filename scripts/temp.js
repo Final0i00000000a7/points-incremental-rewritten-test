@@ -166,7 +166,7 @@ const tmp = {
     },
     get tCrysNextGoal() {
       let goal = E(1e6).pow(player.pmp.transCrystal.add(1))
-      if (player.pmp.transCrystal.gte(50)) goal = E(2).pow(E(1.024).pow(player.pmp.transCrystal.add(1).mul(6)))
+      if (player.pmp.transCrystal.gte(50)) goal = E(3).pow(E(3).pow(player.pmp.transCrystal.add(1).mul(4).root(3)))
       return goal
     },
     get spentCrystal() {
@@ -187,11 +187,17 @@ const tmp = {
   },
   cube: {
     get gainNorm() {
-      return player.square.points.add(1).log10().root(3).div(3).sub(3).floor()
+      return player.square.points.add(1).log10().root(3).div(3).sub(3).floor().clampMin(0)
     },
     get gainDis() {
-      let sqrtgain = player.sqrt.points.slog(10)
-    }
+      let sqrtgain = player.sqrt.points.slog().cbrt()
+      let ptsgain = player.points.slog()
+      let sqgain = player.square.points.slog().pow(2)
+      return sqrtgain.add(ptsgain).add(sqgain).floor().clampMin(0)
+    },
+    get gainUpg() {
+      return E(2).pow(player.square.upgrades.length - 15).floor()
+    },
   },
   get achievementsEffDim() {
     return E(1.05).pow(player.achievements.length)
