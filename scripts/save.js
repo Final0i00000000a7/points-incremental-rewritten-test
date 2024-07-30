@@ -180,7 +180,6 @@ function load() {
     deepCopyProps(loadplayer, player)
     fixOldSave()
   }
-  saveVal = setInterval(save, 1000 / 30)
   //removed: setInterval(uncheat,30)
   console.error(new cheatError('Cheater\'s mother is not defined'))
   loadVue()

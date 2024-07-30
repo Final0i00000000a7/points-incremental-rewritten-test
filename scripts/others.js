@@ -107,8 +107,8 @@ function formatGain(a,e,res="") {
             if (oom.gte(1e-3)) return oom.format() + " 数量级^^2"
         }
 
-        if (a.gte('ee100')) {
-            var tower = E(a).slog(10).sub(1.3010299956639813).floor();
+        if (a.gte('1e10')) {
+            var tower = E(a).slog(10).floor();
     
             var oom = E(g).iteratedlog(10,tower).sub(E(a).iteratedlog(10,tower)).mul(30), rated = false;
     
@@ -122,7 +122,7 @@ function formatGain(a,e,res="") {
             if (rated) return oom.format() + " 数量级^"+tower
         }
     
-        if (a.gte(1e100)) {
+        if (a.gte(1)) {
             const oom = g.div(a).log10().mul(30)
             if (oom.gte(1)) return oom.format() + " 数量级"
         }
@@ -147,3 +147,20 @@ Array.fromBitmask = function(mask) {
 Array.prototype.exclude = function (...excludeList) {
   return this.filter(el => !excludeList.includes(el))
 }
+Array.range = function(start, count) {
+  return [...Array(count).keys()].map(i => i + start);
+};
+//define constants
+const zero = E(0)
+const one = E(1)
+const two = E(2)
+const ten = E(10)
+const one_hundred_and_fourteen_thousands_five_hundred_and_fourteen = E(114514)
+const e10 = E(1e10)
+const ee10 = E("ee10")
+const F10 = E("10^^10")
+const G10 = E("10^^^10")
+const H10 = E("10^^^^10")
+const J10 = E("10{10}10")
+const K10 = E(10).expansion(10)
+const END = E(10).expansion(1e40)

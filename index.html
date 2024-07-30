@@ -20,6 +20,7 @@
   <script src="scripts/square.js" defer></script>
   <script src="scripts/cube/index.js" defer></script>
   <script src="scripts/cube/buyables.js" defer></script>
+  <script src="scripts/cube/upgrades.js" defer></script>
   <script src="scripts/pmp.js" defer></script>
   <script src="scripts/others.js" defer></script>
   <script src="scripts/offline.js" defer></script>
@@ -30,6 +31,7 @@
   <script src="scripts/achievements.js" defer></script>
   <script src="scripts/changelog.js" defer></script>
   <script src="scripts/save.js" defer></script>
+  <script src="scripts/dev.js" defer></script>
 </head>
 
 <body>
@@ -44,7 +46,7 @@
       <newsticker v-if="player.options.showNewsTicker"></newsticker>
       <div class="popup" v-if="app.isShowingPopup == 1">请输入存档<br><input v-model="save" placeholder="在此处键入存档"><br><button @click="importFromApp" class="btn">导入</button></div>
       <div v-html="getPointDisplay()"></div>
-      <div v-if="isEndgame" :style="{color: getUndulatingColor()}">已到达当前版本终点！</div>
+      <div v-if="isEndgame()" :style="{color: getUndulatingColor()}">已到达当前版本终点！</div>
       <div>{{ getPointGain() }}</div>
       <div v-if="player.timeSpeed != 1">当前全局游戏速度：×{{ format(player.timeSpeed) }}</div>
       <div style="color: yellow" v-if="player.square.unl">你有{{ player.square.points.format(0) }}点数<sup>2</sup>，因此√点数复制速度×{{ tmp.square.effect.format() }}</div>
@@ -57,6 +59,7 @@
         <button @click="switchpage(12)" class="cube" :disabled="tabshow.cube.inTab" v-if="tabshow.cube.unlocked">立方</button>
         <button @click="switchpage(6)" class="btn" :disabled="tabshow.stats.inTab">统计</button>
         <button @click="switchpage(2)" class="btn" :disabled="tabshow.others.inTab">杂项</button>
+        <button @click="switchpage(null)" class="dev" :style="{background: getUndulatingColor(2), color: getUndulatingColorReversed(2)}" :disabled="tabshow.devmode.inTab" v-if="dev.devmode">测试</button>
       </div>
       <main-line v-if="tabshow.showTheSecondLine"></main-line>
       <div>
@@ -106,6 +109,13 @@
         本游戏使用了<a href="https://github.com/Naruyoko/ExpantaNum.js" target="_blank">ExpantaNum.js</a>
         <a href="https://github.com/cloudytheconqueror/letter-notation-format" target="_blank">format-expantanum.js</a>来处理大数字<br>
         使用了<a href="https://github.com/nodeca/pako" target="_blank">pako.js</a>来处理存档<br>
+        推荐游戏：<br>
+        <a href="https://ivark.github.io" target="_blank">反物质维度</a>
+        <a href="https://liuliu66686.github.io/The-Periodic-Elements-Incemental-Tree/TMTR/" target="_blank">元素周期增量树</a>
+        <a href="https://qqqe308.github.io/The-Rhythm-Game-Tree/" target="_blank">音乐游戏树</a>
+        <a href="https://dlsdl.github.io/wind_spirit_creation" target="_blank">风灵作成</a>
+        <a href="https://seanxlx2011.github.io/" target="_blank">数据增量重制版</a>
+        <a href="https://qqqe308.github.io/Anti-Anti-Softcap-Tree/111" target="_blank">反反软上限树</a>
         <rainbow><i>点击可查看被遮挡的剧透内容</i></rainbow>
         <h1>更新日志</h1>
         <changelog></changelog>
@@ -122,7 +132,10 @@
       </div>
       <div v-if="player.currentPage == 5">
         <button class="square" @click="square">重置之前的所有内容，但获取{{ tmp.square.gain.format(0) }}点数<sup>2</sup><br>要求：1.000e785点数</button>
-        <button class="cube" @click="cube" v-if="hasSqUpg(15) || player.cube.unl">重置之前的所有内容，但获取{{ tmp.cube.gainNorm.format(0) }}点数<sup>3</sup>, {{ tmp.cube.gainDis.format(0) }}可拆点数<sup>3</sup>和{{ tmp.cube.gainUpg.format(0) }}升级点数<br>要求：1.00e1,729点数<sup>2</sup></button>
+        <button class="cube" @click="cube" v-if="hasSqUpg(15) || player.cube.unl">
+          重置之前的所有内容，但获取{{ tmp.cube.gainNorm.format(0) }}点数<sup>3</sup>, {{ tmp.cube.gainDis.format(0) }}可拆点数<sup>3</sup>和{{ tmp.cube.gainUpg.format(0) }}升级点数<br>
+          要求：1.00e1,729点数<sup>2</sup>
+        </button>
       </div>
       <div v-if="player.currentPage == 6">
         你总共制造了{{ formatWhole(player.total) }}点数<br>
@@ -139,7 +152,7 @@
             <table>
               <tr v-for="row in sq_upgs" key="row.id">
                 <td v-for="upg in sq_upgs[row.id]" key="upg.id">
-                  <div :class="getSqUpgClassName(upg.id)" @touchstart="hover_upg = upg.id" @touchend="hover_upg = 0" @mouseover="hover_upg = upg.id" @mouseleave="hover_upg = 0" @click="buySqUpg(upg.id)" v-if="app.squpgs2[upg.id-1].unlocked"><span>{{ upg.id }}</span></div>
+                  <div :class="getSqUpgClassName(upg.id)" @touchstart="hover_upg = upg.id" @touchend="hover_upg = 0" @mouseover="hover_upg = upg.id" @mouseleave="hover_upg = 0" @click="buySqUpg(upg.id)" v-if="app.squpgs2[upg.id-1].unlocked || hasSqUpg(upg.id)"><span>{{ upg.id }}</span></div>
                 </td>
               </tr>
             </table>
@@ -222,10 +235,27 @@
         让其中一个公式的减益无效，另外一个变为50%
       </div>
       <div v-if="player.currentPage == 14">
+        每个升级点数升级都可以让对应的点数<sup>2</sup>升级进行升级，并且算作2个有效平方升级
         <table>
-          <button></button>
+          <td><button :class="{upg_upg: true, buyable: (player.cube.upg.gte(2) && !hasUpgupg(1)), bought: hasUpgupg(1)}" @click="buyUpgupg(1)">
+            立方重置后保留你的自动化和{{ tmp.cube.upgupgeff[1] }}个点数<sup>2</sup>，挑战5不再禁用自动化<br>
+            价格：2升级点数
+          </button></td>
+          <td><button :class="{upg_upg: true, buyable: (player.cube.upg.gte(10) && !hasUpgupg(2)), bought: hasUpgupg(2)}" @click="buyUpgupg(2)">
+            立方重置保留{{ tmp.cube.upgupgeff[2] }}个平方升级，升级点数获取底数+1<br>
+            价格：10升级点数
+          </button></td>
+          <td><button class="upg_upg" :class="{upg_upg: true, buyable: (player.cube.upg.gte(100) && !hasUpgupg(3)), bought: hasUpgupg(3)}" @click="buyUpgupg(3)">
+            立方前重置不再重置√点数和√星系<br>
+            价格：100升级点数
+          </button></td>
+          <td><button class="upg_upg" :class="{upg_upg: true, buyable: (player.cube.upg.gte(400) && !hasUpgupg(4)), bought: hasUpgupg(4)}" @click="buyUpgupg(4)">
+            立方重置后保留5个平方挑战<br>
+            价格：400升级点数
+          </button></td>
         </table>
       </div>
+      <test-page></test-page>
     </div>
   </div>
 </body>

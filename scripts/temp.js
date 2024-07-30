@@ -38,7 +38,9 @@ const tmp = {
       if((hasSqUpg(1) && player.chal != 5)) buff = buff.mul(sq_upgs[0].effect)
       if(player.sqrt.galaxies.gte(6)) buff = buff.mul(player.sqrt.galaxies)
       if(player.square.chals.includes(1) && player.points.gte(1e10)) buff = buff.mul(player.points.slog(10))
+      if(player.square.chals.includes(1) && player.points.gte(1e10) && hasUpgupg(4)) buff = buff.mul(player.points.slog(10).pow(2))
       if(player.square.chals.includes(2) && (player.sqrt.points.lt(Number.MAX_VALUE) || (hasSqUpg(7) && player.chal != 5))) buff = buff.mul(player.dims[8][4].add(10).log10())
+      if (hasSqChal(2) && hasUpgupg(4)) buff = buff.div(Math.log10(Math.E))
       if(hasSqChal(4)) buff = buff.mul(Math.PI)
       if(hasAch(16)) {
         if (player.sqrt.points.gte(1e10)) buff = buff.mul(1.06)
@@ -51,6 +53,7 @@ const tmp = {
       if((player.chal == 4 || player.chal == 5)) return E(0)
       let div = E(200)
       if(hasSqChal(4)) div = div.div(tmp.sqrt.fullCostRoot)
+      if(hasUpgupg(4) && hasSqChal(4)) div = div.div(tmp.sqrt.fullCostRoot.sqrt())
       let eff = player.sqrt.points.log10().div(div).min(player.sqrt.galaxies.mul(1 / 2))
       if((player.chal == 2 || player.chal == 5)) eff = eff.mul(0.2)
       if(player.square.chals.includes(2)) eff = eff.mul(1.2)
@@ -58,7 +61,10 @@ const tmp = {
     },
     get fullCostRoot() {
       let root = E(1)
-      if(player.square.chals.includes(3)) root = root.mul(1 / 0.9)
+      if(player.square.chals.includes(3)) {
+        if (hasUpgupg(4)) root = root.mul(1 / 0.49)
+        else root = root.mul(1 / 0.9)
+      }
       root = root.mul(tmp.pmp.Bab3eff)
       return root
     },
@@ -91,6 +97,7 @@ const tmp = {
   pointsToDims(dim) {
     let costRoot = E(1)
     if(player.square.chals.includes(1)) costRoot = costRoot.mul(1.25)
+    if(player.square.chals.includes(5) && hasUpgupg(4)) costRoot = costRoot.mul(1.25)
     if (player.cube.fractals.gte(27)) costRoot = costRoot.mul(tmp.cube.fracEff1)
     var x = player.points.pow(costRoot).overflow(tmp.dimsSoftStart1, tmp.dimsSoftPower1)
     let final = x.log10().div(dim)
@@ -196,7 +203,14 @@ const tmp = {
       return sqrtgain.add(ptsgain).add(sqgain).floor().sub(8).clampMin(0)
     },
     get gainUpg() {
-      return E(2).pow(player.square.upgrades.length - 15).floor()
+      let base = E(2)
+      if (hasUpgupg(2)) base = base.add(1)
+      let gain = base.pow(player.square.upgrades.length - 15)
+      if (hasUpgupg(1) && hasSqUpg(1)) gain = gain.mul(base)
+      if (hasUpgupg(2) && hasSqUpg(2)) gain = gain.mul(base)
+      if (hasUpgupg(3) && hasSqUpg(3)) gain = gain.mul(base)
+      if (hasUpgupg(4) && hasSqUpg(4)) gain = gain.mul(base)
+      return gain.round()
     },
     get babCost1() {
       return E(3).pow(player.cube.buyables[0])
@@ -206,6 +220,11 @@ const tmp = {
     },
     get fracEff1() {
       return player.cube.fractals.add(9).log10().clampMin(0)
+    },
+    get upgupgeff() {
+      let a = 3**player.cube.upgrades.length
+      let b = Math.max(player.cube.upgrades.length**2-1,0)
+      return [null,a,b]
     }
   },
   get achievementsEffDim() {

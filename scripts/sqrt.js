@@ -22,7 +22,7 @@ function galaxy_reset() {
     [E(1e7),E(1e7),E(1),E(0),E(0),E(0)],
     [E(1e8),E(1e8),E(1),E(0),E(0),E(0)],
   ]
-  player.sqrt.points = E(1)
+  if (!hasUpgupg(3)) player.sqrt.points = E(1)
   player.points = E(10)
   player.dims = dims
 }

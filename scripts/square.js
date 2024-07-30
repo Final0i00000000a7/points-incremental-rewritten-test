@@ -1,6 +1,6 @@
 function square_reset() {
   galaxy_reset()
-  player.sqrt.galaxies = E(1)
+  if (!hasUpgupg(3)) player.sqrt.galaxies = E(1)
   player.square.resetTime = E(0)
 }
 
@@ -20,9 +20,17 @@ function updateSquare() {
   }
 }
 const sq_upgs = [{
-    desc: "√点数速率基于√点数而增加",
+    get desc() {
+      let desc = "√点数速率基于√点数而增加"
+      if (hasUpgupg(1)) desc += "[已升级]"
+      return desc
+    },
     get effect() {
-      return player.sqrt.points.log10().add(1).pow(0.2)
+      let eff = player.sqrt.points.log10().add(1).pow(0.2)
+      if (hasUpgupg(1)) eff = eff.pow(1.75)
+      if (hasUpgupg(3)) eff = player.sqrt.points.logBase(2).add(1).pow(0.5)
+      if (hasSqUpg(6)) eff = eff.mul(1.2)
+      return eff
     },
     cost: E(1),
     get effectDisplay() {
@@ -32,7 +40,11 @@ const sq_upgs = [{
     disableInChal5: true
   },
   {
-    desc: "维度的超级折算弱化20%",
+    get desc() {
+      let desc = "维度的超级折算弱化20%"
+      if (hasUpgupg(2)) desc = "维度的超级折算弱化40%[已升级]"
+      return desc
+    },
     cost: E(2),
     unlocked: true,
     get effectDisplay() {
@@ -41,17 +53,26 @@ const sq_upgs = [{
     get effect() {
       let eff = E(0.2)
       if (hasSqUpg(6)) eff = eff.mul(1.2)
+      if (hasUpgupg(2)) eff = eff.mul(2)
       return eff
     }
   },
   {
-    desc: "大幅强化√点数的乘数增益",
+    get desc() {
+      let desc = "大幅强化√点数的乘数增益"
+      if (hasUpgupg(3)) desc = "大幅强化√点数和平方升级1的乘数增益[已升级]"
+      return desc
+    },
     cost: E(10),
     unlocked: true,
     disableInChal5: true
   },
   {
-    desc: "解锁挑战",
+    get desc() {
+      let desc = "解锁平方挑战"
+      if (hasUpgupg(4)) desc = "解锁平方挑战，每一个平方挑战的其中一个奖励被增强[已升级]"
+      return desc
+    },
     cost: E(3000),
     unlocked: true
   },
@@ -107,7 +128,7 @@ const sq_upgs = [{
       return hasSqUpg(9)
     },
     get effect() {
-      let eff = player.pmp.transPoint.pow(0.1)
+      let eff = player.pmp.transPoint.add(1).pow(0.1)
       return eff
     },
     get effectDisplay() {
@@ -170,7 +191,11 @@ const sq_chal = [{
     title: "挑战1 - 递归地狱",
     desc: "你的前一维度不能超过后一维度的数量平方(第八维度除外)<br>点数不能超过√点数的平方<br>开始拥有一个第8维度<br>第8维度上限100个，且此上限每秒×0.99",
     goal: E(2).pow(1024),
-    reward: "前一维度的倍率×log<sub>2</sub>(后一维度倍率)，但前提是后一维度倍率达到至少1024倍<br>√点数获取速度×slg(点数)，前提是点数达到1.000e10<br>所有维度的价格^0.8",
+    get reward() {
+      let rew = "前一维度的倍率×log<sub>2</sub>(后一维度倍率)，但前提是后一维度倍率达到至少1024倍<br>√点数获取速度×slg(点数)，前提是点数达到1.000e10<br>所有维度的价格^0.8"
+      if (hasUpgupg(4)) rew = "前一维度的倍率×log<sub>2</sub>(后一维度倍率)，但前提是后一维度倍率达到至少1024倍<br>√点数获取速度×slg(点数)<sup>3</sup>，前提是点数达到1.000e10<br>所有维度的价格^0.8"
+      return rew
+    },
     unlocked: true
   },
   {
@@ -181,7 +206,11 @@ const sq_chal = [{
       return player.square.chals.includes(1)
     },
     goal: E(2).pow(1024).pow(2),
-    reward: "星系的效率+20%<br>√点数对第一维度的乘数增益指数+0.1，第二维度+0.2，以此类推，第八维度+0.8<br>√点数在1.79e308之前的复制速度*lg(第八维度购买的数量+10)"
+    get reward() {
+      let rew = "星系的效率+20%<br>√点数对第一维度的乘数增益指数+0.1，第二维度+0.2，以此类推，第八维度+0.8<br>√点数在1.79e308之前的复制速度*lg(第八维度购买的数量+10)"
+      if (hasUpgupg(4)) rew = "星系的效率+20%<br>√点数对第一维度的乘数增益指数+0.1，第二维度+0.2，以此类推，第八维度+0.8<br>√点数在1.79e308之前的复制速度*ln(第八维度购买的数量+10)"
+      return rew
+    }
   },
   {
     id: 3,
@@ -191,7 +220,11 @@ const sq_chal = [{
       return player.square.chals.includes(2)
     },
     goal: E(2).pow(1024).pow(3),
-    reward: "解锁(已完成的平方挑战数)个新平方升级<br>√星系价格^0.9<br>√星系不再重置任何东西"
+    get reward() {
+      let rew = "解锁(已完成的平方挑战数)个新平方升级<br>√星系价格^0.9<br>√星系不再重置任何东西"
+      if (hasUpgupg(4)) rew = "解锁(已完成的平方挑战数)个新平方升级<br>√星系价格^0.49<br>√星系不再重置任何东西"
+      return rew
+    }
   },
   {
     id: 4,
@@ -201,7 +234,11 @@ const sq_chal = [{
       return hasSqUpg(7)
     },
     goal: E(2).pow(1024).pow(4),
-    reward: "√点数复制速度×π,挑战3第二效果也对星系效果生效"
+    get reward() {
+      let rew = "√点数复制速度×π,挑战3第二效果也对星系效果生效"
+      if (hasUpgupg(4)) rew = "√点数复制速度×π,挑战3第二效果以其1.5次方对星系效果生效"
+      return rew
+    }
   },
   {
     id: 5,
@@ -211,6 +248,10 @@ const sq_chal = [{
       return hasSqUpg(8)
     },
     goal: E(2).pow(1024),
-    reward: `每秒获取10%点数<sup>2</sup><br>点数<sup>2</sup>基础效果^2<br>解锁点数×点数`,
+    get reward() {
+      let rew = `每秒获取10%点数<sup>2</sup><br>点数<sup>2</sup>基础效果^2<br>解锁点数×点数`
+      if (hasUpgupg(4)) rew = `每秒获取10%点数<sup>2</sup><br>点数<sup>2</sup>基础效果和平方挑战1第三效果^2<br>解锁点数×点数`
+      return rew
+    },
   },
 ]

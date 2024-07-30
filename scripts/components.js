@@ -20,7 +20,6 @@ function loadVue() {
       hover_upg: 0,
       sq_upgs: chunkArrayIntoGroupsOfTen(sq_upgs),
       squpgs2: sq_upgs,
-      limitBuy: player.limitBuyDimNumber.toString(),
     },
     computed: {
       
@@ -29,14 +28,6 @@ function loadVue() {
       
     },
     watch: {
-      limitBuy(num) {
-        try {
-          let test = E(num)
-          if (!test.isNaN()) player.limitBuyDimNumber = test
-        } catch (e) {
-          
-        }
-      }
     },
     nextTick() {
       app.$refs.game.style.display = "block"

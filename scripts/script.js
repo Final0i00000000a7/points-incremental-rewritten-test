@@ -1,6 +1,7 @@
 (function() {  
   isHoldMax = false
   function loop() {  
+    fixPage()
     updateOffline()
     updateLastUpdateTime();  
     if (player.isOffline) return
@@ -17,6 +18,7 @@
     updatePMP()
     updateAch()
     updateCube()
+    save()
   }  
   
   document.addEventListener('DOMContentLoaded', function() {  
@@ -91,6 +93,7 @@ function updatePoints() {
   if ((player.chal == 1 || player.chal == 5)) player.points = player.points.min(player.sqrt.points.pow(2))
   player.total = player.total.add(tmp.ptgain.div(30/player.timeSpeed))
   if (player.best.lt(player.points)) player.best = player.points
+  capPoints()
 }
 
 function buyall() {
@@ -110,25 +113,26 @@ function changeAuto(dim) {
 }
 
 function autoBuy() {
-  if (player.chal != 5) {
+  if (player.chal != 5 || hasUpgupg(1)) {
   for(let i = 1; i <= 8; i++) {
     if (!player.canautodim) break
     if(player.autodims[i - 1]) buyMaxDim(i)
   }
   if (player.autogalaxy && hasSqUpg(7)) galaxy()
   }
+  if (hasUpgupg(1)) player.canautodim = true
+  if (hasUpgupg(1) && !hasSqUpg(7)) player.square.upgrades.push(7)
 }
 
 function detectTimerHooker() {
   if(document.getElementsByClassName("_th-container")[0] != void 0) {
-    clearInterval(saveVal)
     clearInterval(loopVal)
     showNotify("请先关闭宁的计时器掌控者")
   }
 }
 
 function capPoints() {
-  if (player.points.gt(E(10).expansion(1e40))) player.points = E(10).expansion(1e40)
+  if (player.points.gt(END)) player.points = END
 }
 
 function changeNewsTickerShown() {
@@ -142,7 +146,7 @@ function changeHotkey() {
 function updateResetTime() {
   player.square.resetTime = player.square.resetTime.add(1/30*player.timeSpeed)
 }
-const Endgame = E("e156000")
+const Endgame = E("e5e5")
 function isEndgame() {
   return player.points.gte(Endgame)
 }
@@ -151,3 +155,7 @@ function holdMax() {
   requestAnimationFrame(holdMax)
 }
 holdMax()
+
+function fixPage() {
+  if (!dev.devmode && player.currentPage == null) player.currentPage = 1
+}

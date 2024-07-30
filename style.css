@@ -1,5 +1,5 @@
 :root {
-  --font: 'Courier New', 'Noto Sans SC', 'sans-serif';
+  --font: 'Courier New', 'Noto Sans SC', 'sans-serif'
 }
 
 html {
@@ -7,6 +7,7 @@ html {
   color: white;
   user-select: none;
   touch-action: manipulation;
+  overflow: auto;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 }
 
@@ -17,7 +18,7 @@ button {
   font-size: 14px;
   cursor: pointer;
   transition-property: background-color, border, transform, box-shadow;
-  transition-duration: 0.15s;
+  transition-duration: 0.15s
 }
 
 @font-face {
@@ -25,12 +26,12 @@ button {
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(https://fonts.gstatic.com/s/notosanssc/v36/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FnYw.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/notosanssc/v36/k3kCo84MPvpLmixcA63oeAL7Iqp5IZJF9bmaG9_FnYw.ttf) format('truetype')
 }
 
 * {
   font-family: var(--font);
-  user-select: none;
+  user-select: none
 }
 
 .pts-dis {
@@ -38,7 +39,7 @@ button {
   font-size: 48px;
   color: #ffffff;
   display: inline-block;
-  white-space: nowrap;
+  white-space: nowrap
 }
 
 .corrupted {
@@ -50,28 +51,28 @@ button {
   0%,
   100% {
     text-shadow: -4px -4px 4px #5555ff, 4px 4px 4px #ff5555;
-    color: white;
+    color: white
   }
 
   25% {
     text-shadow: -4px 4px 4px #5555ff, 4px -4px 4px #ff5555;
-    color: #eeddff;
+    color: #eeddff
   }
 
   50% {
     text-shadow: 4px 4px 4px #5555ff, -4px -4px 4px #ff5555;
-    color: white;
+    color: white
   }
 
   75% {
     text-shadow: 4px -4px 4px #5555ff, -4px 4px 4px #ff5555;
-    color: #ffddee;
+    color: #ffddee
   }
 }
 
 .charged_text {
   color: cyan;
-  text-shadow: -1px -1px 3px lightskyblue, 0px 0px 5px #878ffa, 1px 1px 3px blue;
+  text-shadow: -1px -1px 3px lightskyblue, 0px 0px 5px #878ffa, 1px 1px 3px blue
 }
 
 .saved_text {
@@ -83,27 +84,27 @@ button {
 
   0%,
   100% {
-    color: #f77;
+    color: #f77
   }
 
   16.7% {
-    color: #f7f;
+    color: #f7f
   }
 
   33.3% {
-    color: #77f;
+    color: #77f
   }
 
   50% {
-    color: #7ff;
+    color: #7ff
   }
 
   66.7% {
-    color: #7f7;
+    color: #7f7
   }
 
   83.3% {
-    color: #ff7;
+    color: #ff7
   }
 }
 
@@ -162,7 +163,7 @@ button {
   border: 1px solid #777;
   background: #333;
   color: white;
-  display: inline-block;
+  display: inline-block
 }
 
 .btn:hover {
@@ -174,7 +175,7 @@ button {
   border: 1px solid #999;
   background: #555;
   color: white;
-  display: inline-block;
+  display: inline-block
 }
 
 .square {
@@ -186,7 +187,7 @@ button {
   border: 1px solid #770;
   background: #550;
   color: white;
-  display: inline-block;
+  display: inline-block
 }
 
 .square:hover {
@@ -198,7 +199,7 @@ button {
   border: 1px solid #990;
   background: #770;
   color: white;
-  display: inline-block;
+  display: inline-block
 }
 
 .cube {
@@ -210,7 +211,7 @@ button {
   border: 1px solid rgb(0, 155, 155);
   background: rgb(0, 127, 127);
   color: white;
-  display: inline-block;
+  display: inline-block
 }
 
 .cube:hover {
@@ -222,7 +223,7 @@ button {
   border: 1px solid rgb(0, 187, 187);
   background: rgb(0, 159, 159);
   color: white;
-  display: inline-block;
+  display: inline-block
 }
 
 .cube:disabled {
@@ -234,7 +235,7 @@ button {
   border: 1px solid rgb(0, 80, 80);
   background: rgb(0, 55, 55);
   color: white;
-  display: inline-block;
+  display: inline-block
 }
 
 .btn:disabled {
@@ -242,7 +243,7 @@ button {
   background: #171717;
   color: #777;
   cursor: not-allowed;
-  display: inline-block;
+  display: inline-block
 }
 
 .square:disabled {
@@ -250,7 +251,7 @@ button {
   background: #333300;
   color: #777;
   cursor: not-allowed;
-  display: inline-block;
+  display: inline-block
 }
 
 .chal,
@@ -263,30 +264,30 @@ button {
   border: 4px solid #555500;
   font-size: 16px;
   text-decoration: none;
-  cursor: pointer;
+  cursor: pointer
 }
 
 .inchal {
-  background-color: #008080;
+  background-color: #008080
 }
 
 .chalcomp {
   background-color: #00ff80;
-  color: #000000;
+  color: #000000
 }
 
 a {
-  color: #def;
+  color: #def
 }
 
 h3 {
   display: inline-block;
   white-space: nowrap;
-  line-height: 0;
+  line-height: 0
 }
 
 .rainbow {
-  background: linear-gradient(90deg, rgb(255, 0, 0), rgb(255, 119, 0), rgb(255, 255, 0), rgb(119, 255, 0), rgb(0, 255, 0), rgb(0, 255, 119), rgb(0, 255, 255), rgb(0, 119, 255), rgb(0, 0, 255), rgb(119, 0, 255), rgb(255, 0, 255), rgb(255, 0, 119));
+  background: linear-gradient(90deg, rgb(255, 0, 0), rgb(255, 119, 0), rgb(255, 255, 0), rgb(119, 255, 0), rgb(0, 255, 0), rgb(0, 255, 119), rgb(0, 255, 255), rgb(0, 119, 255), rgb(0, 0, 255), rgb(119, 0, 255), rgb(255, 0, 255), rgb(255, 0, 119))
 }
 
 .galaxyReset {
@@ -305,11 +306,11 @@ h3 {
   transition-duration: 0.2s;
   border: solid #00007f 2px;
   text-shadow: 6px 6px 6px #00007F;
-  color: white;
+  color: white
 }
 
 .galaxyReset:hover {
-  text-shadow: 6px 6px 6px #5000FF;
+  text-shadow: 6px 6px 6px #5000FF
 }
 
 #loader-overlay {
@@ -326,7 +327,7 @@ h3 {
   color: white;
   font-size: 24px;
   font-weight: bold;
-  z-index: 1919810;
+  z-index: 1919810
 }
 
 #first-galaxy {
@@ -339,13 +340,13 @@ h3 {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  z-index: 9999
 }
 
 #galaxy-text {
   color: black;
   font-size: 40px;
-  font-weight: bold;
+  font-weight: bold
 }
 
 #notify {
@@ -360,12 +361,12 @@ h3 {
   border: solid 2px #222;
   background-color: #171717;
   padding: 7px 25px;
-  transition-duration: 0.75s;
+  transition-duration: 2s
 }
 
 #notify.hide {
   opacity: 0;
-  top: -130px;
+  top: -130px
 }
 
 #news {
@@ -380,18 +381,18 @@ h3 {
   font-size: 16px;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 #newsText {
-  white-space: nowrap;
+  white-space: nowrap
 }
 
 .soft {
   color: hsl(237, 15%, 47%);
   font-weight: bold;
   text-shadow: 0px 1px 0px hsl(252, 19%, 57%);
-  pointer-events: none;
+  pointer-events: none
 }
 
 .transparent-button {
@@ -403,7 +404,7 @@ h3 {
   border: none;
   cursor: pointer;
   outline: none;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease
 }
 
 @keyframes a-implode {
@@ -411,118 +412,118 @@ h3 {
   0%,
   100% {
     transform: scale(1);
-    filter: blur(0);
+    filter: blur(0)
   }
 
   50% {
     transform: scale(0);
-    filter: blur(5px);
+    filter: blur(5px)
   }
 }
 
 @keyframes a-eternify {
   0% {
     opacity: 1;
-    filter: blur(0);
+    filter: blur(0)
   }
 
   15% {
     opacity: 0.5;
-    filter: blur(1px);
+    filter: blur(1px)
   }
 
   30% {
     opacity: 0.75;
-    filter: blur(0.5px);
+    filter: blur(0.5px)
   }
 
   45% {
     opacity: 0.25;
-    filter: blur(1.5px);
+    filter: blur(1.5px)
   }
 
   60% {
     opacity: 0.5;
-    filter: blur(1px);
+    filter: blur(1px)
   }
 
   75% {
     opacity: 0;
-    filter: blur(3px);
+    filter: blur(3px)
   }
 
   85% {
     opacity: 0;
-    filter: blur(3px);
+    filter: blur(3px)
   }
 
   100% {
     opacity: 1;
-    filter: blur(0);
+    filter: blur(0)
   }
 }
 
 @keyframes a-dilate {
   0% {
     opacity: 1;
-    transform: scaleX(1);
+    transform: scaleX(1)
   }
 
   50% {
     opacity: 0;
-    transform: scaleX(3);
+    transform: scaleX(3)
   }
 
   60% {
     opacity: 0;
-    transform: scaleX(1);
+    transform: scaleX(1)
   }
 
   100% {
     opacity: 1;
-    transform: scaleX(1);
+    transform: scaleX(1)
   }
 }
 
 @keyframes a-undilate {
   0% {
     opacity: 1;
-    transform: scaleX(1);
+    transform: scaleX(1)
   }
 
   50% {
     opacity: 0;
-    transform: scaleX(0.5);
+    transform: scaleX(0.5)
   }
 
   60% {
     opacity: 0;
-    transform: scaleX(1);
+    transform: scaleX(1)
   }
 
   100% {
     opacity: 1;
-    transform: scaleX(1);
+    transform: scaleX(1)
   }
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 10px
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #000000;
+  background-color: #000000
 }
 
 ::-webkit-scrollbar-thumb {
   border: solid 1px black;
   background-color: #888;
-  border-radius: 10px;
+  border-radius: 10px
 }
 
 spoiler:active {
   background-color: transparent;
-  color: white;
+  color: white
 }
 
 spoiler {
@@ -531,23 +532,23 @@ spoiler {
   transition-duration: 0.1s;
   cursor: pointer;
   color: transparent;
-  display: inline-block;
+  display: inline-block
 }
 
 @-webkit-keyframes masked-animation {
   0% {
-    background-position: 0 0;
+    background-position: 0 0
   }
 
   00% {
-    background-position: -8000px -3000px;
+    background-position: -8000px -3000px
   }
 }
 
 .sqrt_text {
   text-align: center;
   font-size: 18px;
-  max-width: 700px;
+  max-width: 700px
 }
 
 .popup {
@@ -564,24 +565,25 @@ spoiler {
   max-height: 75%;
   overflow: auto;
   font-size: 16px;
-  z-index: 114514;
+  z-index: 114514
 }
 
 .popup>input {
   width: 300px;
-  margin-bottom: 10px;
+  margin-bottom: 10px
 }
 
 .sq_upg,
 .sq_upg_bought,
-.sq_upg_buyable {
+.sq_upg_buyable,
+.sq_upg_upgraded {
   width: 40px;
   height: 40px;
   border: solid 2px #770;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: center
 }
 
 .sq_upg_disabled {
@@ -592,181 +594,177 @@ spoiler {
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-}
-.upg_upg_canbuy {
-  width: 40px;
-  height: 40px;
-  background: black;
-  border: solid 2px #700;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  text-align: center
 }
 
 .sq_upg_bought {
-  background: #550;
+  background: #550
+}
+.sq_upg_upgraded {
+  background: rgb(0, 159, 159)
 }
 
 .sq_upg_buyable {
-  background: #333;
+  background: #333
 }
 
 .sq_upg:hover {
-  transform: scale(1.2);
+  transform: scale(1.2)
 }
 
 .sq_upg_bought:hover {
-  transform: scale(1.2);
+  transform: scale(1.2)
 }
 
 .sky {
-  color: skyblue;
+  color: skyblue
 }
 
 .green {
-  color: green;
+  color: green
 }
 
 .upg_text_box {
   width: 100%;
-  height: 100px;
+  height: 100px
 }
 
 .aquamarine {
-  color: aquamarine;
+  color: aquamarine
 }
 
 .sqrtP {
-  color: #03a9f4;
+  color: #03a9f4
 }
 
 .sqrtP_lv1 {
   filter: brightness(125%);
-  font-weight: bold;
+  font-weight: bold
 }
 
 .sqrtP_lv2 {
-  animation: a-replicanti--glow 10s infinite;
+  animation: a-replicanti--glow 10s infinite
 }
 
 .sqrtP_lv3 {
   animation: a-replicanti--happy 5s linear infinite, a-replicanti--glow 10s infinite;
   opacity: 1;
-  display: inline-flex;
+  display: inline-flex
 }
 
 @keyframes a-replicanti--glow {
   0% {
-    color: #2196f3;
+    color: #2196f3
   }
 
   33% {
-    color: #673ab7;
+    color: #673ab7
   }
 
   66% {
-    color: #00bcd4;
+    color: #00bcd4
   }
 
   100% {
-    color: #2196f3;
+    color: #2196f3
   }
 }
+
 @keyframes warn {
-  0%,100% {
-    color: #2196f3;
+
+  0%,
+  100% {
+    color: #2196f3
   }
+
   50% {
-    color: #f32121;
+    color: #f32121
   }
 }
 
 @keyframes a-replicanti--happy {
   0% {
-    transform: rotate(0deg);
+    transform: rotate(0deg)
   }
 
   5% {
-    transform: rotate(3deg);
+    transform: rotate(3deg)
   }
 
   10% {
-    transform: rotate(7deg);
+    transform: rotate(7deg)
   }
 
   15% {
-    transform: rotate(10deg);
+    transform: rotate(10deg)
   }
 
   20% {
-    transform: rotate(12deg);
+    transform: rotate(12deg)
   }
 
   25% {
-    transform: rotate(13deg);
+    transform: rotate(13deg)
   }
 
   30% {
-    transform: rotate(12deg);
+    transform: rotate(12deg)
   }
 
   35% {
-    transform: rotate(10deg);
+    transform: rotate(10deg)
   }
 
   40% {
-    transform: rotate(7deg);
+    transform: rotate(7deg)
   }
 
   45% {
-    transform: rotate(3deg);
+    transform: rotate(3deg)
   }
 
   50% {
-    transform: rotate(0deg);
+    transform: rotate(0deg)
   }
 
-  /* 下半部分，反向旋转以模拟正弦波的下降 */
   55% {
-    transform: rotate(-3deg);
+    transform: rotate(-3deg)
   }
 
   60% {
-    transform: rotate(-7deg);
+    transform: rotate(-7deg)
   }
 
   65% {
-    transform: rotate(-10deg);
+    transform: rotate(-10deg)
   }
 
   70% {
-    transform: rotate(-12deg);
+    transform: rotate(-12deg)
   }
 
   75% {
-    transform: rotate(-13deg);
+    transform: rotate(-13deg)
   }
 
   80% {
-    transform: rotate(-12deg);
+    transform: rotate(-12deg)
   }
 
   85% {
-    transform: rotate(-10deg);
+    transform: rotate(-10deg)
   }
 
   90% {
-    transform: rotate(-7deg);
+    transform: rotate(-7deg)
   }
 
   95% {
-    transform: rotate(-3deg);
+    transform: rotate(-3deg)
   }
 
   100% {
-    transform: rotate(0deg);
+    transform: rotate(0deg)
   }
 }
 
@@ -774,7 +772,7 @@ spoiler {
   width: 100%;
   border-bottom: solid 2px #222;
   height: 5px;
-  margin-bottom: 13px;
+  margin-bottom: 13px
 }
 
 .tooltip {
@@ -796,8 +794,8 @@ spoiler {
   position: absolute;
   z-index: 20000;
   background-color: rgba(0, 0, 0, 0.75);
-  color: white content: attr(tooltip);
-  font-size: 14px;
+  color: white content:attr(tooltip);
+  font-size: 14px
 }
 
 .tooltip:after {
@@ -809,7 +807,7 @@ spoiler {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: white transparent transparent transparent;
+  border-color: white transparent transparent transparent
 }
 
 .achi {
@@ -822,19 +820,19 @@ spoiler {
   padding: 5px;
   color: white;
   text-shadow: 0px 0px 12px black;
-  font-size: 12px;
+  font-size: 12px
 }
 
 .tooltipBox {
-  position: relative;
+  position: relative
 }
 
 .tooltipBox:hover .tooltip {
-  opacity: 1;
+  opacity: 1
 }
 
 .unlocked {
-  background-color: darkgreen;
+  background-color: darkgreen
 }
 
 .upg_upg {
@@ -848,19 +846,53 @@ spoiler {
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
-  display: inline-block;
+  display: inline-block
 }
 
-.upg_upg_bought {
+.upg_upg.bought {
   width: 184px;
   height: 120px;
   background-color: #00ff80;
-  color: #000;
+  color: black;
   border: 4px solid rgb(0, 159, 159);
   border-radius: 8px;
   font-family: 'Courier New', 'Source Han Sans', sans-serif;
   font-size: 16px;
   text-decoration: none;
   cursor: pointer;
-  display: inline-block;
+  display: inline-block
+}
+.upg_upg.buyable {
+  width: 184px;
+  height: 120px;
+  background-color: #555;
+  color: white;
+  border: 4px solid rgb(0, 159, 159);
+  border-radius: 8px;
+  font-family: 'Courier New', 'Source Han Sans', sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-block
+}
+
+.dev {
+  cursor: pointer;
+  font-size: 12px;
+  max-width: 250px;
+  padding: 7px 25px;
+  text-decoration: none;
+  border: 1px solid #777;
+  color: white;
+  display: inline-block
+}
+
+.dev:disabled {
+  filter: brightness(0.5)
+}
+
+.c-black-hole-canvas {
+  border: 0.1rem solid black;
+  border-radius: var(--var-border-radius, 0.4rem);
+  margin-top: 0.5rem;
 }

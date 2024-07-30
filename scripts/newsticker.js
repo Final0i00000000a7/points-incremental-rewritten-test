@@ -186,10 +186,57 @@ var texts = [
   {
     text: "通知：受不可抗力因素影响，滚动新闻发生了故障，可能会导致一条新闻被连续播放3~5次"
   },
+  {
+    text: "我想起了一个平衡炸炸炸炸炸的版本......"
+  },
+  {
+    text: "我想起了一个平衡炸炸炸炸炸的版本......"
+  },
+  {
+    text: "孩子们，这是真的, 我在做游戏时留了后门, 玩游戏时只需按下alt+f4, 就可以到达Endgame, 快去试吧！"
+  },
+  {
+    text: `在某平行反物质宇宙中，反物质在生产出来后的0.18308秒后将会坍缩为永恒符文碎片或者有概率湮灭为虚无。
+集齐100个永恒符文碎片可以兑换永恒符文。
+有1.8e308名玩家表示：我们都卡在了99个永恒符文碎片，之后所有反物质都没能变为最后那个碎片。虽然不知道符文是什么，我们仍然希望为此奋斗。
+与此同时，Pelle，在幕后操控着所有反物质的结局。即使有2人试图分享他们的碎片，也会被Pelle在无形中阻止。
+现实，便是如此。这一切，终将被打破。
+为传说中的永恒符文，一名英雄站了出来！他将毕生积攒的1e4000永恒点，升华为了一个现实机器。“这是什么资源？”“我闻所未闻！”其他人这样评论。这真是一个伟大的发现！
+在开辟了这条道路后，众多玩家纷纷跟随。这件事很快被Teresa知晓。Teresa思索，认为玩家们对天神绝不会产生任何威胁，于是向他们开放了自己的现实。Teresa的现实在公开开放后的1/1e300秒内立刻崩溃了。(Error: Server Offline.)
+在发现Teresa后，它们找到一条神秘路径，直接向前遇到了Ra，接着是Lai'tela。试图继续往前时，Lai'tela禁用了所有试图继续向前的玩家所拥有的所有维度。“前方封路，请掉头。”然而，Lai'tela似乎忘了一件事。
+玩家们请来隔壁的Universal Paperclips制造者，超级AI，来生产通用回形针，获得了回形针维度。数值膨胀下，回形针硬生生冲开封锁，直逼Pelle。情急之下，Pelle动用了他全部的反物质，极速消灭了回形针。这产生了一场史无前例的爆炸。
+[REDACTED]`
+  },
+  {
+    text: `Other times await，I need to become eternal`
+  },
+  {
+    text: `数学大厦又倒塌了`
+  },
+  {
+    text: `30IGithub(Hexagon1296)被超形上学部收容，这一事件无疑在数学界引起了广泛关注`
+  },
+  {
+    text: `预言石上血痕现，星河倒悬月无光。莫问何处寻生路，轮回尽头万物殇`
+  },
+  {
+    text: `预言石上血痕现，星河倒悬月无光。莫问何处寻生路，轮回尽头万物殇`
+  },
+  {
+    text: `到达9e15条新闻后，你的滚动新闻将发生溢出初储触锟斤拷烫烫烫...`
+  },
+  {
+    text: `"HTML可以做出模拟宇宙，HTML是最好的语言！`
+  },
+  {
+    text: `禁言石上血痕现，群员倒立月无光。莫问何处寻解禁，一禁尽头万群殇。`
+  },
+  {
+    text: `如果在《硬广》中开启无广告挑战，它将变成一个没有bug的游戏`
+  },
 ]
 textslength = texts.length
-console.log(textslength)
-msg = ""
+console.log(texts)
 let rand
 let repeatN56times = 0
 updatenews = () => {
@@ -198,7 +245,9 @@ updatenews = () => {
   do {
     rand = Math.floor(Math.random() * textslength)
   } while(checkRand(rand))
-  //if (Math.random() < 0.3) rand = 56
+  if (typeof dev != "undefined") {
+    if (dev.devmode) rand = textslength-1
+  }
   if (rand == 56 && repeatN56times == 0) repeatN56times = Math.round(3+Math.random()*(5-2))
   if (repeatN56times > 0) repeatN56times--
   if (repeatN56times > 0) rand = 56

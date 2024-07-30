@@ -922,7 +922,7 @@
     other = new ExpantaNum(other);
     if(other.eq(ExpantaNum.ZERO)) return t;
     if(other.eq(ExpantaNum.ONE)) return t.slog();
-    return E(10).pent(t.mlog().sub(other))
+    return E(10).pent(t.pentalog().sub(other))
   };
   P.layeradd = function(other, base) {
     if(base === undefined) base = 10;
@@ -1015,7 +1015,7 @@
   Q.slog = function(x, y) {
     return new ExpantaNum(x).slog(y);
   };
-  P.mlog = function() {
+  P.pentalog = function() {
     var number = ExpantaNum(this);
     number = E(number)
     if(number.gte('10^^^^10^10')) {

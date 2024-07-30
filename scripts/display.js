@@ -45,6 +45,16 @@ function getUndulatingColor(period = Math.sqrt(760)) {
   c = convertToB16(Math.floor(c * 128) + 128)
   return "#" + String(a) + String(b) + String(c)
 }
+function getUndulatingColorReversed(period = Math.sqrt(760)) {
+  let t = new Date().getTime()
+  let a = Math.sin(t / 1e3 / period * 2 * Math.PI + 0)
+  let b = Math.sin(t / 1e3 / period * 2 * Math.PI + 2)
+  let c = Math.sin(t / 1e3 / period * 2 * Math.PI + 4)
+  a = convertToB16(256 - (Math.floor(a * 128) + 128))
+  b = convertToB16(256 - (Math.floor(b * 128) + 128))
+  c = convertToB16(256 - (Math.floor(c * 128) + 128))
+  return "#" + String(a) + String(b) + String(c)
+}
 
 function colorText(elem, color, text) {
   return "<" + elem + " style='color:" + color + ";text-shadow:0px 0px 10px;'>" + text + "</" + elem + ">"
@@ -71,7 +81,7 @@ function addNotify(str) {
   showNotify(str)
   setTimeout(function() {
     hideNotify()
-  }, 1000)
+  }, 2500)
 }
 
 function addAnimation(name, duration) {
@@ -162,7 +172,7 @@ function get_sq_upg_text() {
 tabshow = {
   main: {
     get inTab() {
-      return [1,4].includes(player.currentPage)
+      return [1,4,11].includes(player.currentPage)
     },
     dimensions: {
       get inTab() {
@@ -195,6 +205,14 @@ tabshow = {
     },
     get unlocked() {
       return player.square.unl || player.sqrt.galaxies.gte(3)
+    },
+  },
+  devmode: {
+    get inTab() {
+      return [null].includes(player.currentPage)
+    },
+    get unlocked() {
+      return new Error("页面错误")
     },
   },
   square: {
@@ -325,6 +343,7 @@ function getSqUpgClassName(id) {
   let upgradeClassName = 'sq_upg';
   if(hasSqUpg(id)) {
     upgradeClassName += '_bought';
+    if (hasUpgupg(id)) upgradeClassName = 'sq_upg_upgraded'
   }
   if(player.square.points.gte(app.squpgs2[id - 1].cost) && !hasSqUpg(id)) {
     upgradeClassName += '_buyable';

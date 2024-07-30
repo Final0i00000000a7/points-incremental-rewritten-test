@@ -5,12 +5,13 @@ function updateOffline() {
   }
   if (player.offlinedTime < 0) player.isOffline = true
   let speed = 2 ** player.offlinePower
-  if (player.timeOverpower & (((speed - 1) / 30) < player.offlinedTime) & !player.isOffline) {
+  if (player.timeOverpower && (((speed - 1) / 30) < player.offlinedTime) && !player.isOffline) {
     player.offlinedTime -= (speed - 1) / 30
     player.timeSpeed = speed
   } else {
     player.timeSpeed = 1
   }
+  if (dev.devmode) player.timeSpeed *= dev.devSpeed
 }
 function switchGameState() {
   if (player.offlinedTime < 0) return

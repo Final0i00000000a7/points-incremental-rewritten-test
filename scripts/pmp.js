@@ -23,8 +23,8 @@ function buyPMP(x) {
     case 3: 
       if (player.sqrt.points.lt(tmp.pmp.sqrtCost)) return
       player.pmp.fromsqrt = player.pmp.fromsqrt.add(1)
-      player.sqrt.points = E(1)
-      player.sqrt.galaxies = E(1)
+      if (!hasUpgupg(3)) player.sqrt.points = E(1)
+      if (!hasUpgupg(3)) player.sqrt.galaxies = E(1)
   }
 }
 

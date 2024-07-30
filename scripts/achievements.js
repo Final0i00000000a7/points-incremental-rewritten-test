@@ -18,6 +18,9 @@ function hasAch(id) {
 function getAch(id) {
   if (hasAch(id)) return
   player.achievements.push(id)
+  let a = Math.floor(id/10),
+    b = id % 10
+  addNotify(`已达成成就${a}${b}：${achievements[a-1][b-1].title}`)
 }
 const achievements = [
   [
